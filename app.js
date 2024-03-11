@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
+var productsRouter = require("./routes/product");
 
 var app = express();
 
@@ -17,7 +18,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
-app.use("/api/users", usersRouter);
+app.use("/api/admin/users", usersRouter);
+app.use("/api/admin/products", productsRouter);
 
 mongoose
   .connect(process.env.MONG_URI)
