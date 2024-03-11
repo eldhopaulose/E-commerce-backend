@@ -41,7 +41,7 @@ const signupUser = async (req, res) => {
 const getSingleUser = async (req, res) => {
   try {
     const user_id = req.user._id; // Assuming the user ID is passed as a parameter in the request
-    const user = await User.findById(user_id);
+    const user = await User.findById(user_id).select("-password"); // Exclude the password field from the response
     res.status(200).json(user);
   } catch (error) {
     res.status(400).json({ error: error.message });
