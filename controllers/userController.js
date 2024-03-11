@@ -40,9 +40,8 @@ const signupUser = async (req, res) => {
 //get single user
 const getSingleUser = async (req, res) => {
   try {
-    const decoded = jwt.verify(user._id, "your secret or key");
-    var userId = decoded.user_data.user_id;
-    const user = await User.findById(userId);
+    const user_id = req.user._id; // Assuming the user ID is passed as a parameter in the request
+    const user = await User.findById(user_id);
     res.status(200).json(user);
   } catch (error) {
     res.status(400).json({ error: error.message });

@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const User = require("../model/adminUserModel");
+const User = require("../models/userModel");
 require("dotenv").config();
 
 const requireAdminAuth = async (req, res, next) => {
@@ -11,7 +11,7 @@ const requireAdminAuth = async (req, res, next) => {
   const token = authorization.split(" ")[1];
 
   try {
-    const { _id } = jwt.verify(token, process.env.SECRET_ADMIN);
+    const { _id } = jwt.verify(token, process.env.SECRET);
 
     req.user = await User.findOne({ _id }).select("_id");
     next();
