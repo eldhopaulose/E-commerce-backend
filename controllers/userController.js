@@ -37,4 +37,16 @@ const signupUser = async (req, res) => {
   }
 };
 
-module.exports = { signupUser, loginUser };
+//get single user
+const getSingleUser = async (req, res) => {
+  try {
+    const decoded = jwt.verify(user._id, "your secret or key");
+    var userId = decoded.user_data.user_id;
+    const user = await User.findById(userId);
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+module.exports = { signupUser, loginUser, getSingleUser };
