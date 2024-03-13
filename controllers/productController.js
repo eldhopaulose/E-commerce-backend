@@ -75,10 +75,34 @@ const deleteProduct = async (req, res) => {
   }
 };
 
+//delete product image
+const deleteProductImage = async (req, res) => {
+  const { id } = req.params;
+  const { image } = req.body;
+  console.log(id, image);
+  try {
+    const product = await Product.findById(id);
+    if (!product) {
+      throw new Error("Product not found");
+    }
+    const index = product.image.indexOf(image);
+    if (index > -1) {
+      product.image.splice(index, 1);
+    }
+    await product.save();
+    res
+      .status(200)
+      .json({ product, message: "Product image deleted successfully" });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 module.exports = {
   getAllProducts,
   getSingleProduct,
   createProduct,
   updateProduct,
   deleteProduct,
+  deleteProductImage,
 };
