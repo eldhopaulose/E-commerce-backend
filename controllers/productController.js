@@ -58,6 +58,24 @@ const updateProduct = async (req, res) => {
   }
 };
 
+//image update
+const updateProductImage = async (req, res) => {
+  const { id } = req.params;
+  const { image } = req.body;
+
+  try {
+    const product = await Product.findById(id);
+    if (!product) {
+      throw new Error("Product not found");
+    }
+    product.image.push(image);
+    await product.save();
+    res.status(200).json({ product });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 // delete a product
 const deleteProduct = async (req, res) => {
   const { id } = req.params;
@@ -106,4 +124,5 @@ module.exports = {
   updateProduct,
   deleteProduct,
   deleteProductImage,
+  updateProductImage,
 };

@@ -6,6 +6,7 @@ const {
   updateProduct,
   deleteProduct,
   deleteProductImage,
+  updateProductImage,
 } = require("../controllers/productController");
 const router = express.Router();
 
@@ -31,5 +32,8 @@ router.delete("/:id", deleteProduct);
 //delete image
 
 router.delete("/image/:id", deleteProductImage);
+
+//update image
+router.put("/image/:id", updateProductImage);
 
 module.exports = router;
