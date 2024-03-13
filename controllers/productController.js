@@ -44,12 +44,12 @@ const createProduct = async (req, res) => {
 // update a product
 const updateProduct = async (req, res) => {
   const { id } = req.params;
-  const { name, image, about, price, discount } = req.body;
+  const { name, about, price, discount } = req.body;
 
   try {
     const product = await Product.findByIdAndUpdate(
       id,
-      { name, image, about, price, discount },
+      { name, about, price, discount },
       { new: true }
     );
     res.status(200).json({ product });
