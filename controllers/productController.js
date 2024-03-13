@@ -79,6 +79,7 @@ const deleteProduct = async (req, res) => {
 const deleteProductImage = async (req, res) => {
   const { id } = req.params;
   const { image } = req.body;
+  console.log(image);
   console.log(id, image);
   try {
     const product = await Product.findById(id);
