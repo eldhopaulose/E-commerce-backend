@@ -25,7 +25,7 @@ const getSingleProduct = async (req, res) => {
 
 // create a product
 const createProduct = async (req, res) => {
-  const { name, image, about, price, discount } = req.body;
+  const { name, image, about, categories, price, discount } = req.body;
 
   try {
     const product = await Product.create({
@@ -34,6 +34,7 @@ const createProduct = async (req, res) => {
       about,
       price,
       discount,
+      categories,
     });
     res.status(201).json({ product });
   } catch (error) {
