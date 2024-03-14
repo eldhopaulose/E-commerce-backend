@@ -9,6 +9,7 @@ var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var productsRouter = require("./routes/product");
 const CustomerRouter = require("./routes/customer");
+const CustomerProductRouter = require("./routes/customerProduct");
 
 var app = express();
 
@@ -27,6 +28,9 @@ app.use("/api/admin/products", productsRouter);
 //customer routes
 
 app.use("/api/customer/users", CustomerRouter);
+
+//customer product routes
+app.use("/api/customer/products", CustomerProductRouter);
 
 mongoose
   .connect(process.env.MONG_URI)
