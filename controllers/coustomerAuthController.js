@@ -40,9 +40,10 @@ const customerSignup = async (req, res) => {
 //get single customer
 const getSingleCustomer = async (req, res) => {
   try {
-    const customer_id = req.customer._id; // Assuming the customer ID is passed as a parameter in the request
-    const customer = await Customer.findById(customer_id).select("-password"); // Exclude the password field from the response
-    res.status(200).json(customer);
+    const user_id = req.user._id; // Assuming the user ID is passed as a parameter in the request
+
+    const user = await Customer.findById(user_id).select("-password"); // Exclude the password field from the response
+    res.status(200).json(user);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
