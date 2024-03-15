@@ -53,7 +53,7 @@ const likeProduct = async (req, res) => {
       productId: id,
     });
     if (existingLike) {
-      return res.status(200).json({ message: "Product already liked" });
+      return res.status(400).json({ message: "Product already liked" });
     }
 
     const likedProduct = await CustomerLike.create({
