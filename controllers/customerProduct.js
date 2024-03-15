@@ -53,7 +53,7 @@ const likeProduct = async (req, res) => {
       productId: id,
     });
     if (existingLike) {
-      return res.status(400).json({ message: "Product already liked" });
+      return res.status(200).json({ message: "Product already liked" });
     }
 
     const likedProduct = await CustomerLike.create({
@@ -90,10 +90,26 @@ const unlikeProduct = async (req, res) => {
   }
 };
 
+//display liked products
+
+const displayLikedProducts = async (req, res) => {
+  const user_id = req.user._id;
+  console.log("user_id");
+  console.log("user_id");
+  console.log("user_id");
+  try {
+    const likedProducts = await CustomerLike.find({ customerId: user_id });
+    res.status(200).json({ likedProducts });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 module.exports = {
   getAllProducts,
   getSingleProduct,
   getProductsByCategory,
   likeProduct,
   unlikeProduct,
+  displayLikedProducts,
 }; // Export the functions

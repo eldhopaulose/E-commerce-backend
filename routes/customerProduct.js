@@ -10,6 +10,7 @@ const {
   getProductsByCategory,
   likeProduct,
   unlikeProduct,
+  displayLikedProducts,
 } = require("../controllers/customerProduct");
 
 // get all products
@@ -26,5 +27,6 @@ router.use(requireCustomerAuth); // Protect all routes below this middleware
 // like and unlike product
 router.post("/like/:id", likeProduct);
 router.post("/unlike/:id", unlikeProduct);
+router.get("/like/display", displayLikedProducts);
 
 module.exports = router;
