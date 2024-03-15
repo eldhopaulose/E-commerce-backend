@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const CustomerLike = require("../models/customerLikeModel");
 const Product = require("../models/productModel");
 
 // get all products
@@ -36,4 +36,64 @@ const getSingleProduct = async (req, res) => {
   }
 };
 
-module.exports = { getAllProducts, getSingleProduct, getProductsByCategory }; // Export the functions
+//customer like product
+
+// like product
+const likeProduct = async (req, res) => {
+  const { id } = req.params;
+  const user_id = req.user._id;
+  console.log(user_id);
+  try {
+    const product = await Product.findById(id);
+    if (!product) {
+      return res.status(400).json({ message: "Product not found" });
+    }
+    const existingLike = await CustomerLike.findOne({
+      customerId: user_id,
+      productId: id,
+    });
+    if (existingLike) {
+      return res.status(400).json({ message: "Product already liked" });
+    }
+
+    const likedProduct = await CustomerLike.create({
+      customerId: user_id,
+      productId: id,
+    });
+    res.status(200).json({ likedProduct });
+    res.status(200).json({ newLike });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+// unlike product
+const unlikeProduct = async (req, res) => {
+  const { id } = req.params;
+  const user_id = req.user._id;
+  try {
+    const product = await Product.findById(id);
+    if (!product) {
+      return res.status(400).json({ message: "Product not found" });
+    }
+    const existingLike = await CustomerLike.findOne({
+      customerId: user_id,
+      productId: id,
+    });
+    if (!existingLike) {
+      return res.status(400).json({ message: "Product not liked" });
+    }
+    await CustomerLike.findByIdAndDelete(existingLike._id);
+    res.status(200).json({ message: "Product unliked" });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+module.exports = {
+  getAllProducts,
+  getSingleProduct,
+  getProductsByCategory,
+  likeProduct,
+  unlikeProduct,
+}; // Export the functions

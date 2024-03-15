@@ -1,11 +1,15 @@
 const express = require("express");
 
+const requireCustomerAuth = require("../middleware/requireCustomerAuth");
+
 const router = express.Router();
 
 const {
   getAllProducts,
   getSingleProduct,
   getProductsByCategory,
+  likeProduct,
+  unlikeProduct,
 } = require("../controllers/customerProduct");
 
 // get all products
@@ -16,5 +20,11 @@ router.get("/:category", getProductsByCategory);
 // get a single product
 
 router.get("/product/:id", getSingleProduct);
+
+router.use(requireCustomerAuth); // Protect all routes below this middleware
+
+// like and unlike product
+router.post("/like/:id", likeProduct);
+router.post("/unlike/:id", unlikeProduct);
 
 module.exports = router;
