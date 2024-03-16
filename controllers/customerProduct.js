@@ -60,8 +60,9 @@ const likeProduct = async (req, res) => {
       customerId: user_id,
       productId: id,
     });
+
+    // Combine likedProduct and newLike into a single response
     res.status(200).json({ likedProduct });
-    res.status(200).json({ newLike });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
