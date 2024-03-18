@@ -142,7 +142,7 @@ const createAddress = async (req, res) => {
     req.body;
   const user_id = req.user._id;
   try {
-    const newAddress = await Address.create({
+    const newAddress = await Address.save({
       user_id,
       name,
       address,
@@ -159,10 +159,10 @@ const createAddress = async (req, res) => {
 };
 
 //get address
-const getAddress = async (req, res) => {
+
+const getAddresss = async (req, res) => {
   const user_id = req.user._id;
-  console.log("asasas");
-  console.log(user_id);
+  console.log("asasasasasas");
   try {
     const address = await Address.find({ user_id });
     res.status(200).json({ address });
@@ -201,6 +201,6 @@ module.exports = {
   displayLikedProducts,
   displayLikedAllProducts,
   createAddress,
-  getAddress,
+  getAddresss,
   updateAddress,
 }; // Export the functions
