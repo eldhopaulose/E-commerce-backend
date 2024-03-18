@@ -94,7 +94,6 @@ const unlikeProduct = async (req, res) => {
 };
 
 //display liked products
-
 const displayLikedProducts = async (req, res) => {
   const user_id = req.user._id;
   console.log("user_id");
