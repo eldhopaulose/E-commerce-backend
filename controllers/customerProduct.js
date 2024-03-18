@@ -142,7 +142,7 @@ const createAddress = async (req, res) => {
     req.body;
   const user_id = req.user._id;
   try {
-    const newAddress = await Address.save({
+    const newAddress = await Address.create({
       user_id,
       name,
       address,
