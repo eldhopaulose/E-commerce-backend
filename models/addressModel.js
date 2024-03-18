@@ -30,6 +30,10 @@ const addressSchema = new Schema({
     type: String,
     required: true,
   },
+  country: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("Address", addressSchema);

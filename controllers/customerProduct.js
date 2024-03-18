@@ -138,8 +138,16 @@ const displayLikedAllProducts = async (req, res) => {
 
 //create address
 const createAddress = async (req, res) => {
-  const { name, address, city, state, district, pinCode, mobileNumber } =
-    req.body;
+  const {
+    name,
+    address,
+    city,
+    state,
+    district,
+    pinCode,
+    mobileNumber,
+    country,
+  } = req.body;
   const user_id = req.user._id;
   try {
     const newAddress = await Address.create({
@@ -151,6 +159,7 @@ const createAddress = async (req, res) => {
       district,
       pinCode,
       mobileNumber,
+      country,
     });
     res.status(200).json({ newAddress });
   } catch (error) {
