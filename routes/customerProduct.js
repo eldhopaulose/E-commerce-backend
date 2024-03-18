@@ -12,6 +12,9 @@ const {
   unlikeProduct,
   displayLikedProducts,
   displayLikedAllProducts,
+  createAddress,
+  getAddress,
+  updateAddress,
 } = require("../controllers/customerProduct");
 
 // get all products
@@ -30,5 +33,9 @@ router.post("/like/:id", likeProduct);
 router.post("/unlike/:id", unlikeProduct);
 router.get("/like/display", displayLikedProducts);
 router.get("/like/displayall", displayLikedAllProducts);
+
+router.post("/adress", createAddress);
+router.get("/adress", getAddress);
+router.put("/adress/:id", updateAddress);
 
 module.exports = router;

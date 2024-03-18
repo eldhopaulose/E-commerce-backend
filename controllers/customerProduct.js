@@ -1,5 +1,6 @@
 const CustomerLike = require("../models/customerLikeModel");
 const Product = require("../models/productModel");
+const Address = require("../models/addressModel");
 
 // get all products
 const getAllProducts = async (req, res) => {
@@ -28,6 +29,7 @@ const getProductsByCategory = async (req, res) => {
 // get a single product
 const getSingleProduct = async (req, res) => {
   const { id } = req.params;
+  console.log(id);
   try {
     const product = await Product.findById(id);
     res.status(200).json({ product });
@@ -134,6 +136,62 @@ const displayLikedAllProducts = async (req, res) => {
   }
 };
 
+//create address
+const createAddress = async (req, res) => {
+  const { name, address, city, state, district, pinCode, mobileNumber } =
+    req.body;
+  const user_id = req.user._id;
+  try {
+    const newAddress = await Address.create({
+      user_id,
+      name,
+      address,
+      city,
+      state,
+      district,
+      pinCode,
+      mobileNumber,
+    });
+    res.status(200).json({ newAddress });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+//get address
+const getAddress = async (req, res) => {
+  const user_id = req.user._id;
+  console.log("asasas");
+  console.log(user_id);
+  try {
+    const address = await Address.find({ user_id });
+    res.status(200).json({ address });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+//update address
+const updateAddress = async (req, res) => {
+  const { id } = req.params;
+  const { name, address, country, state, district, pinCode, mobileNumber } =
+    req.body;
+  try {
+    const updatedAddress = await Address.findByIdAndUpdate(id, {
+      name,
+      address,
+      state,
+      district,
+      pinCode,
+      mobileNumber,
+      country,
+    });
+    res.status(200).json({ updatedAddress });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 module.exports = {
   getAllProducts,
   getSingleProduct,
@@ -142,4 +200,7 @@ module.exports = {
   unlikeProduct,
   displayLikedProducts,
   displayLikedAllProducts,
+  createAddress,
+  getAddress,
+  updateAddress,
 }; // Export the functions
