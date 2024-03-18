@@ -36,7 +36,7 @@ router.get("/like/display:id", displayLikedProducts);
 router.get("/like/displayall", displayLikedAllProducts);
 
 router.post("/adress", createAddress);
-router.get("/adress/:id", getAddresss);
+router.get("/adress/a", getAddresss);
 router.put("/adress/:id", updateAddress);
 
 module.exports = router;
