@@ -33,7 +33,7 @@ router.use(requireCustomerAuth); // Protect all routes below this middleware
 router.post("/like/:id", likeProduct);
 router.post("/unlike/:id", unlikeProduct);
 router.get("/like/display:id", displayLikedProducts);
-router.get("/like/displayall", displayLikedAllProducts);
+router.get("/like/display", displayLikedAllProducts);
 
 router.post("/adress", createAddress);
 router.get("/adress/a", getAddresss);
