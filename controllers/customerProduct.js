@@ -106,6 +106,34 @@ const displayLikedProducts = async (req, res) => {
   }
 };
 
+const displayLikedAllProducts = async (req, res) => {
+  const user_id = req.user._id; // Assuming user ID is stored in req.user._id
+  try {
+    // Find liked products based on customer ID
+    const likedProducts = await CustomerLike.find({
+      customerId: user_id,
+    }).lean();
+
+    // Extracting liked product IDs
+    const likedProductIds = likedProducts.map((like) => like.productId);
+
+    // Fetch product details based on the liked product IDs
+    const products = await Product.find({ _id: { $in: likedProductIds } });
+
+    // Map product details to liked products
+    const likedProductsWithDetails = likedProducts.map((like) => {
+      const productDetails = products.find((product) =>
+        product._id.equals(like.productId)
+      );
+      return { ...like, product: productDetails };
+    });
+
+    res.status(200).json({ likedProducts: likedProductsWithDetails });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 module.exports = {
   getAllProducts,
   getSingleProduct,
@@ -113,4 +141,5 @@ module.exports = {
   likeProduct,
   unlikeProduct,
   displayLikedProducts,
+  displayLikedAllProducts,
 }; // Export the functions
