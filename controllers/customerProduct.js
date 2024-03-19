@@ -1,6 +1,7 @@
 const CustomerLike = require("../models/customerLikeModel");
 const Product = require("../models/productModel");
 const Address = require("../models/addressModel");
+const Cart = require("../models/customerCartModel");
 
 // get all products
 const getAllProducts = async (req, res) => {
@@ -200,6 +201,63 @@ const updateAddress = async (req, res) => {
   }
 };
 
+//create cart
+const createCart = async (req, res) => {
+  const { productId } = req.body;
+  const user_id = req.user._id;
+  try {
+    const existingProduct = await Cart.findOne({ productId });
+    if (existingProduct) {
+      return res.status(400).json({ message: "Product already added" });
+    }
+    const newCart = await Cart.create({
+      customerId: user_id,
+      productId,
+    });
+    res.status(200).json({ newCart });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+//display cart
+const displayCart = async (req, res) => {
+  const user_id = req.user._id;
+  try {
+    const cart = await Cart.find({ customerId: user_id }).lean();
+
+    const productIds = cart.map((item) => item.productId);
+
+    const products = await Product.find({ _id: { $in: productIds } });
+
+    const cartWithProductData = cart.map((item) => {
+      const product = products.find((p) => p._id.equals(item.productId));
+      return { ...item, product };
+    });
+
+    // Calculate total price
+    const totalPrice = cartWithProductData.reduce(
+      (total, item) => total + parseInt(item.product.discount || 0),
+      0
+    );
+
+    res.status(200).json({ cart: cartWithProductData, totalPrice });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+//cart item delete
+const deleteCartItem = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const cart = await Cart.findByIdAndDelete(id);
+    res.status(200).json({ message: "Cart item deleted" });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 module.exports = {
   getAllProducts,
   getSingleProduct,
@@ -211,4 +269,7 @@ module.exports = {
   createAddress,
   getAddresss,
   updateAddress,
+  createCart,
+  displayCart,
+  deleteCartItem,
 }; // Export the functions

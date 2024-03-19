@@ -15,6 +15,9 @@ const {
   createAddress,
   getAddresss,
   updateAddress,
+  createCart,
+  displayCart,
+  deleteCartItem,
 } = require("../controllers/customerProduct");
 
 // get all products
@@ -38,5 +41,10 @@ router.get("/like/displayall", displayLikedAllProducts);
 router.post("/address/create", createAddress);
 router.get("/address/display", getAddresss);
 router.put("/address/update/:id", updateAddress);
+
+// create cart
+router.post("/cart/create", createCart);
+router.get("/cart/display", displayCart);
+router.delete("/cart/delete/:id", deleteCartItem);
 
 module.exports = router;
