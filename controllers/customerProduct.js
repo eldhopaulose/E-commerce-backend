@@ -29,7 +29,6 @@ const getProductsByCategory = async (req, res) => {
 // get a single product
 const getSingleProduct = async (req, res) => {
   const { id } = req.params;
-  console.log(id);
   try {
     const product = await Product.findById(id);
     res.status(200).json({ product });
@@ -94,6 +93,7 @@ const unlikeProduct = async (req, res) => {
 };
 
 //display liked products
+
 const displayLikedProducts = async (req, res) => {
   const user_id = req.user._id;
   console.log("user_id");
@@ -135,70 +135,70 @@ const displayLikedAllProducts = async (req, res) => {
   }
 };
 
-// //create address
-// const createAddress = async (req, res) => {
-//   const {
-//     name,
-//     address,
-//     city,
-//     state,
-//     district,
-//     pinCode,
-//     mobileNumber,
-//     country,
-//   } = req.body;
-//   const user_id = req.user._id;
-//   try {
-//     const newAddress = await Address.create({
-//       user_id,
-//       name,
-//       address,
-//       city,
-//       state,
-//       district,
-//       pinCode,
-//       mobileNumber,
-//       country,
-//     });
-//     res.status(200).json({ newAddress });
-//   } catch (error) {
-//     res.status(400).json({ error: error.message });
-//   }
-// };
+//create address
+const createAddress = async (req, res) => {
+  const {
+    name,
+    address,
+    city,
+    state,
+    district,
+    pinCode,
+    mobileNumber,
+    country,
+  } = req.body;
+  const user_id = req.user._id;
+  try {
+    const newAddress = await Address.create({
+      user_id,
+      name,
+      address,
+      city,
+      state,
+      district,
+      pinCode,
+      mobileNumber,
+      country,
+    });
+    res.status(200).json({ newAddress });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 
-// //get address
+//get address
 
-// const getAddresss = async (req, res) => {
-//   const user_id = req.user._id;
-//   console.log("asasasasasas");
-//   try {
-//     const address = await Address.find({ user_id });
-//     res.status(200).json({ address });
-//   } catch (error) {
-//     res.status(400).json({ error: error.message });
-//   }
-// };
+const getAddresss = async (req, res) => {
+  const user_id = req.user._id;
+  console.log("asasasasasas");
+  try {
+    const address = await Address.find({ user_id });
+    res.status(200).json({ address });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 
-// //update address
-// const updateAddress = async (req, res) => {
-//   const { id } = req.params;
-//   const { name, address, country, state, district, pinCode, mobileNumber } =
-//     req.body;
-//   try {
-//     const updatedAddress = await Address.findByIdAndUpdate(id, {
-//       name,
-//       address,
-//       state,
-//       district,
-//       pinCode,
-//       mobileNumber,
-//       country,
-//     });
-//     res.status(200).json({ updatedAddress });
-//   } catch (error) {
-//     res.status(400).json({ error: error.message });
-//   }
-// };
+//update address
+const updateAddress = async (req, res) => {
+  const { id } = req.params;
+  const { name, address, country, state, district, pinCode, mobileNumber } =
+    req.body;
+  try {
+    const updatedAddress = await Address.findByIdAndUpdate(id, {
+      name,
+      address,
+      state,
+      district,
+      pinCode,
+      mobileNumber,
+      country,
+    });
+    res.status(200).json({ updatedAddress });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 
 module.exports = {
   getAllProducts,
@@ -208,4 +208,7 @@ module.exports = {
   unlikeProduct,
   displayLikedProducts,
   displayLikedAllProducts,
+  createAddress,
+  getAddresss,
+  updateAddress,
 }; // Export the functions

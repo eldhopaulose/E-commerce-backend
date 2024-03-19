@@ -12,6 +12,9 @@ const {
   unlikeProduct,
   displayLikedProducts,
   displayLikedAllProducts,
+  createAddress,
+  getAddresss,
+  updateAddress,
 } = require("../controllers/customerProduct");
 
 // get all products
@@ -28,11 +31,12 @@ router.use(requireCustomerAuth); // Protect all routes below this middleware
 // like and unlike product
 router.post("/like/:id", likeProduct);
 router.post("/unlike/:id", unlikeProduct);
-router.get("/like/display:id", displayLikedProducts);
+router.get("/like/display", displayLikedProducts);
 router.get("/like/displayall", displayLikedAllProducts);
 
-// router.post("/adress", createAddress);
-// router.get("/adress/a", getAddresss);
-// router.put("/adress/:id", updateAddress);
+// create address
+router.post("/address/create", createAddress);
+router.get("/address/display", getAddresss);
+router.put("/address/update/:id", updateAddress);
 
 module.exports = router;
