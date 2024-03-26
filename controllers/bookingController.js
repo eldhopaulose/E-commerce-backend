@@ -2,7 +2,7 @@ const Booking = require("../models/bookingDetailsModel");
 
 // Defined store route
 
-exports.addBooking = function (req, res) {
+exports.addBooking = async function (req, res) {
   const { bookingDate, bookingTime, userId, address, totalAmount, product } =
     req.body;
 
@@ -16,18 +16,21 @@ exports.addBooking = function (req, res) {
   ) {
     return res.status(400).json({ msg: "Please enter all fields" });
   }
-  let booking = new Booking(req.body);
-  booking
-    .save()
-    .then((booking) => {
-      res.status(200).json({
-        booking: "booking in added successfully",
-        bookingId: booking._id,
-      });
-    })
-    .catch((err) => {
-      res.status(400).send("unable to save to database");
+
+  try {
+    const booking = await Booking.create({
+      bookingDate,
+      bookingTime,
+      userId,
+      address,
+      totalAmount,
+      product,
     });
+    res.status(201).json({ booking });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Unable to add booking");
+  }
 };
 
 // Defined get data(index or listing) route
