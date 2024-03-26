@@ -10,6 +10,7 @@ var usersRouter = require("./routes/users");
 var productsRouter = require("./routes/product");
 const CustomerRouter = require("./routes/customer");
 const CustomerProductRouter = require("./routes/customerProduct");
+const bookingRouter = require("./routes/booking");
 
 var app = express();
 
@@ -31,6 +32,12 @@ app.use("/api/customer/users", CustomerRouter);
 
 //customer product routes
 app.use("/api/customer/products", CustomerProductRouter);
+
+//booking routes
+
+app.use("/api/customer/booking", bookingRouter);
+
+//connect to database
 
 mongoose
   .connect(process.env.MONG_URI)
