@@ -6,14 +6,7 @@ exports.addBooking = async function (req, res) {
   const { bookingDate, bookingTime, userId, address, totalAmount, product } =
     req.body;
 
-  if (
-    !bookingDate ||
-    !bookingTime ||
-    !userId ||
-    !address ||
-    !totalAmount ||
-    !product
-  ) {
+  if (!bookingTime || !userId || !address || !totalAmount || !product) {
     return res.status(400).json({ msg: "Please enter all fields" });
   }
 
@@ -26,10 +19,10 @@ exports.addBooking = async function (req, res) {
       totalAmount,
       product,
     });
-    res.status(201).json({ booking });
+    res.status(200).json({ booking });
   } catch (err) {
     console.log(err);
-    res.status(500).send("Unable to add booking");
+    res.status(400).send("Unable to add booking");
   }
 };
 
