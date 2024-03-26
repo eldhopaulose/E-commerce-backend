@@ -3,6 +3,19 @@ const Booking = require("../models/bookingDetailsModel");
 // Defined store route
 
 exports.addBooking = function (req, res) {
+  const { bookingDate, bookingTime, userId, address, totalAmount, product } =
+    req.body;
+
+  if (
+    !bookingDate ||
+    !bookingTime ||
+    !userId ||
+    !address ||
+    !totalAmount ||
+    !product
+  ) {
+    return res.status(400).json({ msg: "Please enter all fields" });
+  }
   let booking = new Booking(req.body);
   booking
     .save()

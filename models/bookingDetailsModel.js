@@ -24,7 +24,7 @@ let BookingDetails = new Schema({
     required: true,
   },
   address: {
-    type: String,
+    type: Array,
     required: true,
   },
   totalAmount: {
