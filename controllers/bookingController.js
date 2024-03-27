@@ -1,4 +1,5 @@
 const Booking = require("../models/bookingDetailsModel");
+const Product = require("../models/productModel");
 
 // Defined store route
 
@@ -30,9 +31,20 @@ exports.addBooking = async function (req, res) {
 exports.getBooking = async function (req, res) {
   try {
     const bookings = await Booking.find();
-    res.json(bookings);
+    res.json({ bookings });
   } catch (err) {
     console.log(err);
     res.status(500).send("Unable to retrieve bookings");
+  }
+};
+
+exports.getBookingById = async function (req, res) {
+  const { id } = req.params;
+  try {
+    const booking = await Product.findById(id);
+    res.json({ booking });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Unable to retrieve booking");
   }
 };
