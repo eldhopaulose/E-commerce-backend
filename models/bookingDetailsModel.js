@@ -35,6 +35,10 @@ let BookingDetails = new Schema({
     type: Array,
     required: true,
   },
+  name: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("BookingDetails", BookingDetails);

@@ -4,10 +4,24 @@ const Product = require("../models/productModel");
 // Defined store route
 
 exports.addBooking = async function (req, res) {
-  const { bookingDate, bookingTime, userId, address, totalAmount, product } =
-    req.body;
+  const {
+    bookingDate,
+    bookingTime,
+    userId,
+    address,
+    totalAmount,
+    product,
+    name,
+  } = req.body;
 
-  if (!bookingTime || !userId || !address || !totalAmount || !product) {
+  if (
+    !bookingTime ||
+    !userId ||
+    !address ||
+    !totalAmount ||
+    !product ||
+    !name
+  ) {
     return res.status(400).json({ msg: "Please enter all fields" });
   }
 
@@ -19,6 +33,7 @@ exports.addBooking = async function (req, res) {
       address,
       totalAmount,
       product,
+      name,
     });
     res.status(200).json({ booking });
   } catch (err) {
